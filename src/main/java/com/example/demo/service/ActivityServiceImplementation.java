@@ -45,5 +45,10 @@ public class ActivityServiceImplementation implements ActivityService {
 	public Activity findById(int id) {
 		return actiRepository.getOne(id);
 	}
+	
+//	@Override
+//	public Activity modifyActivity(Activity activity) {
+//		return actiRepository.save(activity);
+//	}
 
 }
