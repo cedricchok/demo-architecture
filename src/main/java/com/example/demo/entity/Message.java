@@ -6,14 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "activity")
+@Table(name = "message")
 @Entity
-public class Activity {
+public class Message {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String label;
+	private String text;
 	
 	public int getId() {
 		return id;
@@ -21,10 +21,11 @@ public class Activity {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getLabel() {
-		return label;
+	public String getText() {
+		return text;
 	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setText(String text) {
+		this.text = text;
 	}
+
 }

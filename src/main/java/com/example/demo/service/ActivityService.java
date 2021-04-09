@@ -8,9 +8,9 @@ public interface ActivityService {
 
 	public List<Activity> findAll();
 	
-	public Activity addActivity(Activity newActivity);
+//	public Activity addActivity(Activity newActivity);
 	
-	public void deleteActivity(int id);
+//	public void deleteActivity(int id);
 	
 	public Activity findById(int id);
 	

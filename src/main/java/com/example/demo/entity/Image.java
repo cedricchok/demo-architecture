@@ -6,14 +6,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "activity")
+@Table(name = "image")
 @Entity
-public class Activity {
-	
+public class Image {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String label;
+	private String image_64; 
+	private String image_path;
 	
 	public int getId() {
 		return id;
@@ -21,10 +22,16 @@ public class Activity {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getLabel() {
-		return label;
+	public String getImage_64() {
+		return image_64;
 	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setImage_64(String image_64) {
+		this.image_64 = image_64;
+	}
+	public String getImage_path() {
+		return image_path;
+	}
+	public void setImage_path(String image_path) {
+		this.image_path = image_path;
 	}
 }

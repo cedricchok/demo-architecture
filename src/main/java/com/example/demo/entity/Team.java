@@ -6,14 +6,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "activity")
+@Table(name = "team")
 @Entity
-public class Activity {
-	
+public class Team {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String label;
+	private int nb_players;
 	
 	public int getId() {
 		return id;
@@ -21,10 +21,10 @@ public class Activity {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getLabel() {
-		return label;
+	public int getNb_players() {
+		return nb_players;
 	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setNb_players(int nb_players) {
+		this.nb_players = nb_players;
 	}
 }

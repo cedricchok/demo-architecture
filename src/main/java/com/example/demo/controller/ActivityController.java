@@ -32,16 +32,16 @@ public class ActivityController {
 		}
 	}
 	
-	@PostMapping
-	public Activity addActivity(@RequestBody Activity newActivity) {
-		return actiService.addActivity(newActivity);
-	}
-	
-	@DeleteMapping
-	public void deleteActivity(int id) {
-		actiService.deleteActivity(id);
-	}
-	
+//	@PostMapping
+//	public Activity addActivity(@RequestBody Activity newActivity) {
+//		return actiService.addActivity(newActivity);
+//	}
+//	
+//	@DeleteMapping
+//	public void deleteActivity(int id) {
+//		actiService.deleteActivity(id);
+//	}
+//	
 //	@PostMapping("/update")
 //	public Activity modifyActivity(@RequestBody Activity modifiedActivity) {
 //		return actiService.modifyActivity(modifiedActivity);

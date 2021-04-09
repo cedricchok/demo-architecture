@@ -1,19 +1,21 @@
 package com.example.demo.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "activity")
+@Table(name = "training")
 @Entity
-public class Activity {
-	
+public class Training {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String label;
+	private Date date;
 	
 	public int getId() {
 		return id;
@@ -21,10 +23,10 @@ public class Activity {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getLabel() {
-		return label;
+	public Date getDate() {
+		return date;
 	}
-	public void setLabel(String label) {
-		this.label = label;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

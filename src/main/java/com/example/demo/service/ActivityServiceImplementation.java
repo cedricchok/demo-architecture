@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.ActivityRepository;
@@ -12,15 +11,12 @@ import com.example.demo.entity.Activity;
 @Service
 public class ActivityServiceImplementation implements ActivityService {
 	
-	// @Autowired
 	public ActivityRepository actiRepository;
 
 	public ActivityServiceImplementation(ActivityRepository actiRepository) {
 		super();
 		this.actiRepository = actiRepository;
 	}
-
-
 
 	@Override
 	public List<Activity> findAll() {
@@ -30,16 +26,15 @@ public class ActivityServiceImplementation implements ActivityService {
 //		return actiRepository.findAll();
 	}
 
-
-	@Override
-	public Activity addActivity(Activity newActivity) {
-		return actiRepository.save(newActivity);
-	}
-	
-	@Override
-	public void deleteActivity(int id) {
-		actiRepository.deleteById(id);
-	}
+//	@Override
+//	public Activity addActivity(Activity newActivity) {
+//		return actiRepository.save(newActivity);
+//	}
+//	
+//	@Override
+//	public void deleteActivity(int id) {
+//		actiRepository.deleteById(id);
+//	}
 	
 	@Override
 	public Activity findById(int id) {
