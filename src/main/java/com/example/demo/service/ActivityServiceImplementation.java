@@ -26,15 +26,15 @@ public class ActivityServiceImplementation implements ActivityService {
 //		return actiRepository.findAll();
 	}
 
-//	@Override
-//	public Activity addActivity(Activity newActivity) {
-//		return actiRepository.save(newActivity);
-//	}
-//	
-//	@Override
-//	public void deleteActivity(int id) {
-//		actiRepository.deleteById(id);
-//	}
+	@Override
+	public Activity addActivity(Activity newActivity) {
+		return actiRepository.save(newActivity);
+	}
+	
+	@Override
+	public void deleteActivity(int id) {
+		actiRepository.deleteById(id);
+	}
 	
 	@Override
 	public Activity findById(int id) {
