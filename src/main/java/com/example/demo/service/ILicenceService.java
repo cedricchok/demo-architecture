@@ -8,7 +8,7 @@ public interface ILicenceService {
 
 	public List<Licence> getLicences();
 	
-//	public Licence addLicence(Licence newLicence);
+	public Licence addLicence(Licence newLicence);
 	
 //	public void deleteLicence(int id);
 	
