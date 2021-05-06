@@ -28,12 +28,14 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	// Create user
 	@Override
 	public UserDto createUser(UserDto user) {
-
+		// Verification if user email exist in database
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Email already exists !");
 
+		// Copie of user to userEntity
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
@@ -56,6 +58,17 @@ public class UserServiceImpl implements IUserService {
 			throw new UsernameNotFoundException(email);
 
 		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+	}
+
+	@Override
+	public UserDto getUser(String email) {
+		UserEntity userEntity = userRepository.findByEmail(email);
+		if (userEntity == null)
+			throw new UsernameNotFoundException(email);
+
+		UserDto returnValue = new UserDto();
+		BeanUtils.copyProperties(userEntity, returnValue);
+		return returnValue;
 	}
 
 }
