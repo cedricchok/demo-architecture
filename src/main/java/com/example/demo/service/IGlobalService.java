@@ -25,7 +25,7 @@ public interface IGlobalService {
 	
 	
 	// Club
-//	public List<Club> getClubs();
+	public List<Club> getClubs();
 	
 //	public Club addClub(Club newClub);
 	
@@ -41,6 +41,9 @@ public interface IGlobalService {
 //	public void deleteEvent(int id);
 	
 //	public Event getEventById(int id);
+	
+	// Authentification
+	// public login
 	
 	// User
 	public List<User> getUsers();
