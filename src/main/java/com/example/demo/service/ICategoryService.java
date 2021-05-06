@@ -6,12 +6,12 @@ import com.example.demo.entity.Category;
 
 public interface ICategoryService {
 	
-	public List<Category> getCategories();
+	public List<Category> findAll();
 	
-//	public Category addCategory(Category newCategory);
+    public Category addCategory(Category newCategory);
 	
-//	public void deleteCategory(int id);
+    public void deleteCategory(int id);
 	
-	public Category getCategoryById(int id);
+	public Category findById(int id);
 
 }

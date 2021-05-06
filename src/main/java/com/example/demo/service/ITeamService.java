@@ -6,11 +6,11 @@ import com.example.demo.entity.Team;
 
 public interface ITeamService {
 
-	public List<Team> getTeams();
+	public List<Team> findAll();
 	
 	public Team addTeam(Team newTeam);
 	
 	public void deleteTeam(int id);
 	
-	public Team getTeamById(int id);
+	public Team findById(int id);
 }

@@ -1,32 +1,36 @@
 package com.example.demo.entity;
 
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name = "training")
 @Entity
+@Table(name = "training")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Training {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private Date date;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
+/*	@ManyToOne(targetEntity = Team.class)
+	@JoinColumn(name = "team_id")
+	private Team team;*/
+
+	@Column(name = "tr_date")
+	@NotNull
+	private Date tr_date;
+
+	@Column(name = "team_name")
+	@NotNull
+	private String team_name;
+
+
 }

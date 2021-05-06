@@ -1,39 +1,38 @@
 package com.example.demo.entity;
 
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name = "competition")
 @Entity
+@Table(name = "competition")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Competition {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String label;
+
+
+	@Column(name = "title", nullable = false)
+	@NotNull
+	private String title;
+
+	@Column(name = "date" , nullable = false)
+	@NotNull
 	private Date date;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
+
+  /* @OneToMany(cascade = {CascadeType.REMOVE },targetEntity = Team.class, mappedBy = "competition")
+	private List<Team> team = new ArrayList<>();*/
+
 }

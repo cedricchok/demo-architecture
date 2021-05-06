@@ -1,30 +1,36 @@
 package com.example.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "team")
+import javax.persistence.*;
+
 @Entity
+@Table(name = "team")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Team {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+ /*   @OneToOne(targetEntity = Activity.class)
+	@JoinColumn(nullable = false, name ="activity_id")
+	private Activity activity;
+
+	@OneToOne(targetEntity =  Category.class)
+	@JoinColumn(nullable = false, name = "category_id")
+	private Category category;*/
+
+	@Column(name="label")
+	@NotNull
+	private String label;
+
+	@Column(name = "nb_players")
+	@NotNull
 	private int nb_players;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getNb_players() {
-		return nb_players;
-	}
-	public void setNb_players(int nb_players) {
-		this.nb_players = nb_players;
-	}
 }

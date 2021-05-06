@@ -6,11 +6,13 @@ import com.example.demo.entity.Competition;
 
 public interface ICompetitionService {
 
-	public List<Competition> getCompetitions();
+	public List<Competition> findAll();
 	
-//	public Competition addCompetition(Competition newCompetition);
+    public Competition addCompetition(Competition newCompetition);
 	
-//	public void deleteCompetition(int id);
+    public void deleteCompetition(int id);
 	
-	public Competition getCompetitionById(int id);
+	public Competition findById(int id);
+
+
 }

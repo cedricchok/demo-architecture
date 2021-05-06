@@ -10,30 +10,36 @@ import com.example.demo.dao.ICategoryRepository;
 import com.example.demo.entity.Category;
 
 @Service
-public class CategoryServiceImpl {
+public class CategoryServiceImpl implements ICategoryService {
 
-	@Autowired
-	public ICategoryRepository categoryRepo;
+    @Autowired
+	public ICategoryRepository cateRepository;
+
+/*	public CategoryServiceImpl(ICategoryRepository cateRepository) {
+		super();
+		this.cateRepository = cateRepository;
+	}*/
 
 
+	@Override
 	public List<Category> findAll() {
 		List<Category> liste = new ArrayList<Category>();
-		categoryRepo.findAll().forEach(liste::add);
+		cateRepository.findAll().forEach(liste::add);
 		return liste;
 	}
 
-//	@Override
-//	public Category addCategory(Category newCategory) {
-//		return categoryRepo.save(newCategory);
-//	}
-//	
-//	@Override
-//	public void deleteCategory(int id) {
-//		categoryRepo.deleteById(id);
-//	}
-	
-	public Category findById(int id) {
-		return categoryRepo.getOne(id);
+	@Override
+	public Category addCategory(Category newCategory) {
+	return cateRepository.save(newCategory);
 	}
-	
+
+	@Override
+    public void deleteCategory(int id) {
+		cateRepository.deleteById(id);
+	}
+    @Override
+	public Category findById(int id) {
+		return cateRepository.getOne(id);
+	}
+
 }

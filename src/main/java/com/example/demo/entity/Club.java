@@ -1,66 +1,45 @@
 package com.example.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "club")
+import javax.persistence.*;
+
 @Entity
-public class Club {
+@Table(name = "club")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+	public class Club {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String name;
-	private String address;
-	private String zipcode;
-	private String city;
-	private String mail;
-	private String telephone;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getZipcode() {
-		return zipcode;
-	}
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	public String getMail() {
-		return mail;
-	}
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
-	public String getTelephone() {
-		return telephone;
-	}
-	public void setTelephone(String telephone) {
-		this.telephone = telephone;
-	}
-	
+		@Id
+		@GeneratedValue(strategy = GenerationType.IDENTITY)
+		private int id;
+
+		@Column(name = "name" , nullable = false, length= 100)
+		@NotNull
+		private String name;
+
+		@Column(name = "address" , nullable = false, length = 300)
+		@NotNull
+		private String adresse;
+
+		@Column(name = "city" , nullable = false, length = 10)
+		@NotNull
+		private String city;
+
+		@Column(name = "zipCode" , nullable = false, length = 10)
+		@NotNull
+		private String zipCode;
+
+		@Column(name = "mail" , nullable = false)
+		@NotNull
+		private String mail;
+
+		@Column(name = "tel" , nullable = false)
+		@NotNull
+		private Number tel;
+
 }

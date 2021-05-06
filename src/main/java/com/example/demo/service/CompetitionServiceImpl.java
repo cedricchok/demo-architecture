@@ -10,28 +10,31 @@ import com.example.demo.dao.ICompetitionRepository;
 import com.example.demo.entity.Competition;
 
 @Service
-public class CompetitionServiceImpl {
+public class CompetitionServiceImpl implements ICompetitionService  {
+
 
 	@Autowired
-	public ICompetitionRepository competitionRepo;
+	public ICompetitionRepository compRepository;
 
-	public List<Competition> getCompetitions() {
+
+	@Override
+	public List<Competition> findAll() {
 		List<Competition> liste = new ArrayList<Competition>();
-		competitionRepo.findAll().forEach(liste::add);
+		compRepository.findAll().forEach(liste::add);
 		return liste;
 	}
 
-//	@Override
-//	public Competition addCompetition(Competition newCompetition) {
-//		return competitionRepo.save(newCompetition);
-//	}
-//	
-//	@Override
-//	public void deleteCompetition(int id) {
-//		competitionRepo.deleteById(id);
-//	}
-	
+    @Override
+     public Competition addCompetition(Competition newCompetition) {
+		return compRepository.save(newCompetition);
+     }
+
+	@Override
+	public void deleteCompetition(int id) {
+		compRepository.deleteById(id);
+	}
+	@Override
 	public Competition findById(int id) {
-		return competitionRepo.getOne(id);
+		return compRepository.getOne(id);
 	}
 }

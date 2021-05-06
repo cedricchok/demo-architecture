@@ -1,31 +1,27 @@
 package com.example.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "message")
+import javax.persistence.*;
+
 @Entity
+@Table(name = "message")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Message {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+ /* @ManyToOne(targetEntity = User.class)
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;*/
+
+	@Column(name = "text")
 	private String text;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getText() {
-		return text;
-	}
-	public void setText(String text) {
-		this.text = text;
-	}
 
 }
