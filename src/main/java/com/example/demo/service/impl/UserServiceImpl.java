@@ -104,9 +104,14 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public UserDto deleteUser(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteUser(String userId) {
+		UserEntity userEntity = userRepository.findByUserId(userId);
+		
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
+		userRepository.delete(userEntity);
+
 	}
 
 }
