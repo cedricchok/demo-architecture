@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.request.UserDetailsRequestModel;
-
+import com.example.demo.models.response.ErrorMessages;
+import com.example.demo.models.response.OperationStatusModel;
+import com.example.demo.models.response.RequestOperationName;
+import com.example.demo.models.response.RequestOperationStatus;
 import com.example.demo.models.response.UserRest;
 import com.example.demo.service.IUserService;
 import com.example.demo.shared.dto.UserDto;
@@ -64,8 +67,15 @@ public class UserController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public String deleteUser(@PathVariable String id) {
-		return "user is delete";
+	public OperationStatusModel deleteUser(@PathVariable String id) {
+		OperationStatusModel returnValue = new OperationStatusModel();
+
+		userService.deleteUser(id);
+
+		returnValue.setOperationName(RequestOperationName.DELETE.name());
+		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+		return returnValue;
+
 	}
 
 }
