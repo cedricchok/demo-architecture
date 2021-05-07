@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
+
 import org.springframework.web.bind.annotation.*;
 
-=======
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
->>>>>>> 345400a9fbf4bb8c94476ccb24626243f702ad6f
+
 
 import com.example.demo.entity.Activity;
 import com.example.demo.service.ActivityService;
@@ -46,12 +46,7 @@ public class ActivityController {
 //	public void deleteActivity(int id) {
 //		actiService.deleteActivity(id);
 //	}
-<<<<<<< HEAD
-//
-=======
-//	
 
->>>>>>> 345400a9fbf4bb8c94476ccb24626243f702ad6f
 //	@PostMapping("/update")
 //	public Activity modifyActivity(@RequestBody Activity modifiedActivity) {
 //		return actiService.modifyActivity(modifiedActivity);

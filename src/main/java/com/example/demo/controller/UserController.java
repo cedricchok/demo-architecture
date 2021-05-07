@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import com.example.demo.exceptions.UserServiceException;
 import com.example.demo.models.request.UserDetailsRequestModel;
-import com.example.demo.models.response.ErrorMessages;
 
 import com.example.demo.models.response.UserRest;
 import com.example.demo.service.IUserService;
