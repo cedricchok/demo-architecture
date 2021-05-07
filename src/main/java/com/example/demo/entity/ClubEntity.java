@@ -11,7 +11,9 @@ public class ClubEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private int id;
+	private String clubId;
 	private String name;
 	private String address;
 	private String zipcode;
@@ -60,6 +62,12 @@ public class ClubEntity implements Serializable {
 	}
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
+	}
+	public String getClubId() {
+		return clubId;
+	}
+	public void setClubId(String clubId) {
+		this.clubId = clubId;
 	}
 	
 }

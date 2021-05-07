@@ -1,10 +1,7 @@
 package com.example.demo.service;
 
-import org.springframework.security.core.clubdetails.ClubDetailsService;
-
 import com.example.demo.shared.dto.ClubDto;
 
-public interface IClubService extends ClubDetailsService{
+public interface IClubService {
 	ClubDto createClub(ClubDto club);
-
 }
