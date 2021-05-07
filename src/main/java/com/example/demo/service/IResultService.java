@@ -1,16 +1,10 @@
 package com.example.demo.service;
 
-import java.util.List;
+import org.springframework.security.core.resultdetails.ResultDetailsService;
 
-import com.example.demo.entity.Result;
+import com.example.demo.shared.dto.ResultDto;
 
-public interface IResultService {
+public interface IResultService extends ResultDetailsService{
+	ResultDto createResult(ResultDto result);
 
-	public List<Result> getResults();
-	
-	public Result addResult(Result newResult);
-	
-//	public void deleteResult(int id);
-	
-	public Result getResultById(int id);
 }

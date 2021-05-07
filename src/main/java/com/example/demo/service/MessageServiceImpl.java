@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IMessageRepository;
-import com.example.demo.entity.Message;
+import com.example.demo.entity.MessageEntity;
 
 @Service
 public class MessageServiceImpl {
@@ -15,13 +15,13 @@ public class MessageServiceImpl {
 	@Autowired
 	public IMessageRepository messageRepo;
 
-	public List<Message> findAll() {
-		List<Message> liste = new ArrayList<Message>();
+	public List<MessageEntity> findAll() {
+		List<MessageEntity> liste = new ArrayList<MessageEntity>();
 		messageRepo.findAll().forEach(liste::add);
 		return liste;
 	}
 
-	public Message addMessage(Message newMessage) {
+	public MessageEntity addMessage(MessageEntity newMessage) {
 		return messageRepo.save(newMessage);
 	}
 	
@@ -29,7 +29,7 @@ public class MessageServiceImpl {
 		messageRepo.deleteById(id);
 	}
 	
-	public Message findById(int id) {
+	public MessageEntity findById(int id) {
 		return messageRepo.getOne(id);
 	}
 }

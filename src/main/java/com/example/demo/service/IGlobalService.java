@@ -1,21 +1,8 @@
 package com.example.demo.service;
 
-import java.util.List;
+import com.example.demo.entity.*;
 
-import com.example.demo.entity.Activity;
-import com.example.demo.entity.Category;
-import com.example.demo.entity.Club;
-import com.example.demo.entity.Competition;
-import com.example.demo.entity.Event;
-import com.example.demo.entity.Image;
-import com.example.demo.entity.Licence;
-import com.example.demo.entity.Localisation;
-import com.example.demo.entity.Message;
-import com.example.demo.entity.Result;
-import com.example.demo.entity.Role;
-import com.example.demo.entity.Team;
-import com.example.demo.entity.Training;
-import com.example.demo.entity.UserEntity;
+import java.util.List;
 
 public interface IGlobalService {
 	// Les méthodes en commentaire ne sont pas encore utiles car certaines données
@@ -25,22 +12,22 @@ public interface IGlobalService {
 	
 	
 	// Club
-	public List<Club> getClubs();
+	public List<ClubEntity> getClubs();
 	
-//	public Club addClub(Club newClub);
+	public ClubEntity addClub(ClubEntity newClub);
 	
-//	public void deleteClub(int id);
+	public void deleteClub(int id);
 	
-	public Club getClubById(int id);
+	public ClubEntity getClubById(int id);
 	
 	// Event
-	public List<Event> getEvents();
+	public List<EventEntity> getEvents();
 	
-//	public Event addEvent(Event newEvent);
+	public EventEntity addEvent(EventEntity newEvent);
 	
-//	public void deleteEvent(int id);
+	public void deleteEvent(int id);
 	
-//	public Event getEventById(int id);
+	public EventEntity getEventById(int id);
 	
 	// Authentification
 	// public login
@@ -64,13 +51,13 @@ public interface IGlobalService {
 	public Role getRoleById(int id);
 	
 	// Message
-	public List<Message> getMessages();
+	public List<MessageEntity> getMessages();
 	
-	public Message addMessage(Message newMessage);
+	public MessageEntity addMessage(MessageEntity newMessage);
 	
 	public void deleteMessage(int id);
 	
-	public Message getMessageById(int id);
+	public MessageEntity getMessageById(int id);
 	
 	// Image
 //	public List<Image> getImages();
@@ -136,13 +123,13 @@ public interface IGlobalService {
 	public Competition getCompetitionById(int id);
 	
 	// Result
-	public List<Result> getResults();
+	public List<ResultEntity> getResults();
 	
-	public Result addResult(Result newResult);
+	public ResultEntity addResult(ResultEntity newResult);
 	
-//	public void deleteResult(int id);
+	public void deleteResult(int id);
 	
-	public Result getResultById(int id);
+	public ResultEntity getResultById(int id);
 	
 	// Localisation
 //	public List<Localisation> getLocalisations();

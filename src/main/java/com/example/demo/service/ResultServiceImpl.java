@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IResultRepository;
-import com.example.demo.entity.Result;
+import com.example.demo.entity.ResultEntity;
 
 @Service
 public class ResultServiceImpl {
@@ -15,13 +15,13 @@ public class ResultServiceImpl {
 	@Autowired
 	public IResultRepository resultRepo;
 
-	public List<Result> findAll() {
-		List<Result> liste = new ArrayList<Result>();
+	public List<ResultEntity> findAll() {
+		List<ResultEntity> liste = new ArrayList<ResultEntity>();
 		resultRepo.findAll().forEach(liste::add);
 		return liste;
 	}
 
-	public Result addResult(Result newResult) {
+	public ResultEntity addResult(ResultEntity newResult) {
 		return resultRepo.save(newResult);
 	}
 //	
@@ -30,7 +30,7 @@ public class ResultServiceImpl {
 //		resultRepo.deleteById(id);
 //	}
 	
-	public Result findById(int id) {
+	public ResultEntity findById(int id) {
 		return resultRepo.getOne(id);
 	}
 }

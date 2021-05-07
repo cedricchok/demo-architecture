@@ -1,16 +1,10 @@
 package com.example.demo.service;
 
-import java.util.List;
+import org.springframework.security.core.messagedetails.MessageDetailsService;
 
-import com.example.demo.entity.Message;
+import com.example.demo.shared.dto.MessageDto;
 
 public interface IMessageService {
+	MessageDto createMessage(MessageDto message);
 
-	public List<Message> getMessages();
-	
-	public Message addMessage(Message newMessage);
-	
-	public void deleteMessage(int id);
-	
-	public Message getMessageById(int id);
 }

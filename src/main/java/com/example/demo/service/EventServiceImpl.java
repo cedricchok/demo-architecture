@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IEventRepository;
-import com.example.demo.entity.Event;
+import com.example.demo.entity.EventEntity;
 
 @Service
 public class EventServiceImpl {
@@ -15,8 +15,8 @@ public class EventServiceImpl {
 	@Autowired
 	public IEventRepository eventRepo;
 
-	public List<Event> findAll() {
-		List<Event> liste = new ArrayList<Event>();
+	public List<EventEntity> findAll() {
+		List<EventEntity> liste = new ArrayList<EventEntity>();
 		eventRepo.findAll().forEach(liste::add);
 		return liste;
 	}

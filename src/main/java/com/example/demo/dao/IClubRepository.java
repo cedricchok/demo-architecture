@@ -3,9 +3,9 @@ package com.example.demo.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.entity.Club;
+import com.example.demo.entity.ClubEntity;
 
 @Repository
-public interface IClubRepository extends JpaRepository<Club, Integer> {
+public interface IClubRepository extends JpaRepository<ClubEntity, Integer> {
 
 }
