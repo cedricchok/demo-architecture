@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.example.demo.shared.dto.UserDto;
@@ -14,5 +16,9 @@ public interface IUserService extends UserDetailsService {
 	UserDto updateUser(String userId, UserDto user);
 
 	void deleteUser(String userId);
+
+	List<UserDto> getUsers(int page, int limit);
+
+	List<UserDto> getUsers();
 
 }

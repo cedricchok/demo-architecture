@@ -17,9 +17,11 @@ public class UserEntity implements Serializable {
 	@GeneratedValue
 	private long id;
 
-	@Column(nullable = false) // Permet de securisé un peu plus les users et ne pas utilisé l'id pour recuperer un user
+	@Column(nullable = false)
+	// Permet de securisé un peu plus les users et ne pas utilisé l'id pour
+	// recuperer un user
 	private String userId;
-	
+
 	@Column(nullable = false, length = 50)
 	private String firstName;
 
@@ -44,7 +46,7 @@ public class UserEntity implements Serializable {
 	private String city;
 
 	private String telephone;
-	
+
 	private int sex;
 
 	private Date registration_date;
