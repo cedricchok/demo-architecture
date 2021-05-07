@@ -15,7 +15,7 @@ import com.example.demo.entity.Result;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.Team;
 import com.example.demo.entity.Training;
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserEntity;
 
 public interface IGlobalService {
 	// Les méthodes en commentaire ne sont pas encore utiles car certaines données
@@ -25,7 +25,7 @@ public interface IGlobalService {
 	
 	
 	// Club
-//	public List<Club> getClubs();
+	public List<Club> getClubs();
 	
 //	public Club addClub(Club newClub);
 	
@@ -42,14 +42,17 @@ public interface IGlobalService {
 	
 //	public Event getEventById(int id);
 	
-	// User
-	public List<User> getUsers();
+	// Authentification
+	// public login
 	
-	public User addUser(User newUser);
+	// User
+	public List<UserEntity> getUsers();
+	
+	public UserEntity addUser(UserEntity newUser);
 	
 	public void deleteUser(int id);
 	
-	public User getUserById(int id);
+	public UserEntity getUserById(int id);
 	
 	// Role
 	public List<Role> getRoles();

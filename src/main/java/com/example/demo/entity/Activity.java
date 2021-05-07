@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class Activity implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
   /* @OneToOne(mappedBy = "activity", cascade = CascadeType.REMOVE, targetEntity = Image.class)

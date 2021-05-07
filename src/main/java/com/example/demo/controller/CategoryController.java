@@ -25,7 +25,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping(path = "/add")
+    @PostMapping()
     public Category addCategory(@RequestBody Category newCategory) {
         return cateService.addCategory(newCategory); }
 
@@ -33,7 +33,7 @@ public class CategoryController {
     public void deleteCategoryById(@PathVariable  int id) {
         cateService.deleteCategory(id);}
 
-    @GetMapping(path = "/search/{id}")
+    @GetMapping(path = "/{id}")
     public void searchCategoryById(@PathVariable int id) {
         cateService.findById(id);}
 }
