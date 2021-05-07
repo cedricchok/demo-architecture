@@ -35,7 +35,7 @@ public class UserServiceImpl implements IUserService {
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Email already exists !");
 
-		// Copie of user to userEntity
+		// Copy of user to userEntity
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
@@ -68,6 +68,19 @@ public class UserServiceImpl implements IUserService {
 
 		UserDto returnValue = new UserDto();
 		BeanUtils.copyProperties(userEntity, returnValue);
+		return returnValue;
+	}
+
+	@Override
+	public UserDto getUserByUserId(String userId) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+
+		if (userEntity == null)
+			throw new UsernameNotFoundException(userId);
+
+		BeanUtils.copyProperties(userEntity, returnValue);
+
 		return returnValue;
 	}
 
