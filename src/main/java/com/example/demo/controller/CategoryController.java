@@ -1,7 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Category;
+import com.example.demo.entity.CategoryEntity;
+import com.example.demo.models.request.CategoryRequestModels;
+import com.example.demo.models.response.CategoryRest;
 import com.example.demo.service.ICategoryService;
+import com.example.demo.shared.dto.CategoryDto;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,30 +17,40 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
 
-    @Autowired
-    public ICategoryService cateService;
+	@Autowired
+	public ICategoryService categoryService;
 
-    @GetMapping(value = "/list")
-    public List<Category> findAll() {
-        List<Category> liste = cateService.findAll();
-        if(liste != null){
-            return liste;
-        } else {
-            return liste = new ArrayList<Category>();
-        }
-    }
+//    @GetMapping()
+//    public List<CategoryRest> findAll() {
+//        List<CategoryDto> liste = categoryService.findAll();
+//        if(liste != null){
+//            return liste;
+//        } else {
+//            return liste = new ArrayList<CategoryDto>();
+//        }
+//    }
 
-    @PostMapping(path = "/add")
-    public Category addCategory(@RequestBody Category newCategory) {
-        return cateService.addCategory(newCategory); }
+	@PostMapping()
+	public CategoryRest createCategory(@RequestBody CategoryRequestModels newCategory) {
+		// Objet retourné par l'api
+		CategoryRest returnValue = new CategoryRest();
 
-    @DeleteMapping(path = "/delete/{id}")
-    public void deleteCategoryById(@PathVariable  int id) {
-        cateService.deleteCategory(id);}
+		CategoryDto categoryDto = new CategoryDto();
+		BeanUtils.copyProperties(newCategory, categoryDto);
 
-    @GetMapping(path = "/search/{id}")
-    public void searchCategoryById(@PathVariable int id) {
-        cateService.findById(id);}
+		CategoryDto createdCategory = categoryService.createCategory(categoryDto);
+		BeanUtils.copyProperties(createdCategory, returnValue);
+
+		return returnValue;
+	}
+
+//	@DeleteMapping(path = "/{id}")
+//	public void deleteCategoryById(@PathVariable int id) {
+//		cateService.deleteCategory(id);
+//	}
+//
+//	@GetMapping(path = "/{id}")
+//	public void searchCategoryById(@PathVariable int id) {
+//		cateService.findById(id);
+//	}
 }
-
-

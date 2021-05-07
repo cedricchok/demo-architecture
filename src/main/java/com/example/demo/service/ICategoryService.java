@@ -2,16 +2,18 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.Category;
+import com.example.demo.shared.dto.CategoryDto;
 
 public interface ICategoryService {
-	
-	public List<Category> findAll();
-	
-    public Category addCategory(Category newCategory);
-	
-    public void deleteCategory(int id);
-	
-	public Category findById(int id);
+
+	List<CategoryDto> findAll();
+
+	CategoryDto createCategory(CategoryDto category);
+
+	CategoryDto deleteCategory(String categoryId);
+
+	CategoryDto findByCategoryId(String categoryId);
+
+	CategoryDto updateCategory(String categoryId, CategoryDto category);
 
 }
