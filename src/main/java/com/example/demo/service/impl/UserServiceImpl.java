@@ -41,7 +41,7 @@ public class UserServiceImpl implements IUserService {
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
-		String publicUserId = utils.generateUserId(30);
+		String publicUserId = utils.generateRandomEntityPublicId(30);
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
