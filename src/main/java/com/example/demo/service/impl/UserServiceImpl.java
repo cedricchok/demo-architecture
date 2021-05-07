@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IUserRepository;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.exceptions.UserServiceException;
+import com.example.demo.models.response.ErrorMessages;
 import com.example.demo.service.IUserService;
 import com.example.demo.shared.Utils;
 import com.example.demo.shared.dto.UserDto;
@@ -80,6 +82,23 @@ public class UserServiceImpl implements IUserService {
 			throw new UsernameNotFoundException(userId);
 
 		BeanUtils.copyProperties(userEntity, returnValue);
+
+		return returnValue;
+	}
+
+	@Override
+	public UserDto updateUser(String userId, UserDto user) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
+		userEntity.setFirstName(user.getFirstName());
+		userEntity.setLastName(user.getLastName());
+
+		UserEntity updatedUserDetails = userRepository.save(userEntity);
+		BeanUtils.copyProperties(updatedUserDetails, returnValue);
 
 		return returnValue;
 	}
