@@ -8,4 +8,7 @@ import com.example.demo.entity.UserEntity;
 @Repository
 public interface IUserRepository extends CrudRepository<UserEntity, Long> {
 	UserEntity findByEmail(String email);
+
+	UserEntity findByUserId(String userId);
+
 }

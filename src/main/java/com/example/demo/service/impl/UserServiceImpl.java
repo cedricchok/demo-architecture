@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IUserRepository;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.exceptions.UserServiceException;
+import com.example.demo.models.response.ErrorMessages;
 import com.example.demo.service.IUserService;
 import com.example.demo.shared.Utils;
 import com.example.demo.shared.dto.UserDto;
@@ -28,16 +30,18 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	// Create user
 	@Override
 	public UserDto createUser(UserDto user) {
-
+		// Verification if user email exist in database
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Email already exists !");
 
+		// Copy of user to userEntity
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
-		String publicUserId = utils.generateUserId(30);
+		String publicUserId = utils.generateRandomEntityPublicId(30);
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
@@ -56,6 +60,53 @@ public class UserServiceImpl implements IUserService {
 			throw new UsernameNotFoundException(email);
 
 		return new User(userEntity.getEmail(), userEntity.getEncryptedPassword(), new ArrayList<>());
+	}
+
+	@Override
+	public UserDto getUser(String email) {
+		UserEntity userEntity = userRepository.findByEmail(email);
+		if (userEntity == null)
+			throw new UsernameNotFoundException(email);
+
+		UserDto returnValue = new UserDto();
+		BeanUtils.copyProperties(userEntity, returnValue);
+		return returnValue;
+	}
+
+	@Override
+	public UserDto getUserByUserId(String userId) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+
+		if (userEntity == null)
+			throw new UsernameNotFoundException(userId);
+
+		BeanUtils.copyProperties(userEntity, returnValue);
+
+		return returnValue;
+	}
+
+	@Override
+	public UserDto updateUser(String userId, UserDto user) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
+		userEntity.setFirstName(user.getFirstName());
+		userEntity.setLastName(user.getLastName());
+
+		UserEntity updatedUserDetails = userRepository.save(userEntity);
+		BeanUtils.copyProperties(updatedUserDetails, returnValue);
+
+		return returnValue;
+	}
+
+	@Override
+	public UserDto deleteUser(String userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
