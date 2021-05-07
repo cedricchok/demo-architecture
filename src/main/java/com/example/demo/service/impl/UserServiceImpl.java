@@ -103,4 +103,10 @@ public class UserServiceImpl implements IUserService {
 		return returnValue;
 	}
 
+	@Override
+	public UserDto deleteUser(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
