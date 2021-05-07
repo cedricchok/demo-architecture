@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IUserRepository;
 import com.example.demo.entity.UserEntity;
+<<<<<<< HEAD
+=======
+import com.example.demo.exceptions.UserServiceException;
+import com.example.demo.models.response.ErrorMessages;
+>>>>>>> 345400a9fbf4bb8c94476ccb24626243f702ad6f
 import com.example.demo.service.IUserService;
 import com.example.demo.shared.Utils;
 import com.example.demo.shared.dto.UserDto;
@@ -35,11 +40,19 @@ public class UserServiceImpl implements IUserService {
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Email already exists !");
 
+<<<<<<< HEAD
 		// Copie of user to userEntity
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
 		String publicUserId = utils.generateUserId(30);
+=======
+		// Copy of user to userEntity
+		UserEntity userEntity = new UserEntity();
+		BeanUtils.copyProperties(user, userEntity);
+
+		String publicUserId = utils.generateRandomEntityPublicId(30);
+>>>>>>> 345400a9fbf4bb8c94476ccb24626243f702ad6f
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
@@ -71,4 +84,43 @@ public class UserServiceImpl implements IUserService {
 		return returnValue;
 	}
 
+<<<<<<< HEAD
+=======
+	@Override
+	public UserDto getUserByUserId(String userId) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+
+		if (userEntity == null)
+			throw new UsernameNotFoundException(userId);
+
+		BeanUtils.copyProperties(userEntity, returnValue);
+
+		return returnValue;
+	}
+
+	@Override
+	public UserDto updateUser(String userId, UserDto user) {
+		UserDto returnValue = new UserDto();
+		UserEntity userEntity = userRepository.findByUserId(userId);
+
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+
+		userEntity.setFirstName(user.getFirstName());
+		userEntity.setLastName(user.getLastName());
+
+		UserEntity updatedUserDetails = userRepository.save(userEntity);
+		BeanUtils.copyProperties(updatedUserDetails, returnValue);
+
+		return returnValue;
+	}
+
+	@Override
+	public UserDto deleteUser(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+>>>>>>> 345400a9fbf4bb8c94476ccb24626243f702ad6f
 }

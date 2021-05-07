@@ -17,8 +17,14 @@ public class UserEntity implements Serializable {
 	@GeneratedValue
 	private long id;
 
+<<<<<<< HEAD
 	@Column(nullable = false) // Permet de securisé un peu plus les users 
 	private String userId;
+=======
+	@Column(nullable = false) // Permet de securisé un peu plus les users et ne pas utilisé l'id pour recuperer un user
+	private String userId;
+	
+>>>>>>> 345400a9fbf4bb8c94476ccb24626243f702ad6f
 	@Column(nullable = false, length = 50)
 	private String firstName;
 
