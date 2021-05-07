@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/club") // http://localhost:8080/clubs
+@RequestMapping("/club") // http://localhost:8080/club
 public class ClubController {
     @Autowired
     IClubService clubService;

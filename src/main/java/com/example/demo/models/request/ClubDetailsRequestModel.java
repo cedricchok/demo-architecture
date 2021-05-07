@@ -1,13 +1,40 @@
 package com.example.demo.models.request;
 
 public class ClubDetailsRequestModel {
-    private String name;
-    private String address;
-    private String telephone;
+	private String name;
+	private String address;
+	private String zipcode;
+	private String city;
+	private String mail;
+	private String telephone;
 
 
 
-    public String getName() {
+    public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getName() {
         return name;
     }
 

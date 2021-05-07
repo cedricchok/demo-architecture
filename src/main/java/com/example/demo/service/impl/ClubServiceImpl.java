@@ -25,7 +25,7 @@ public class ClubServiceImpl implements IClubService {
 		ClubEntity clubEntity = new ClubEntity();
 		BeanUtils.copyProperties(club, clubEntity);
 
-		String publicClubId = utils.generateUserId(30);
+		String publicClubId = utils.generateRandomEntityPublicId(30);
 		clubEntity.setClubId(publicClubId);
 
 		ClubEntity storedClubDetails = clubRepository.save(clubEntity);
