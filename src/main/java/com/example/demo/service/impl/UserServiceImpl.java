@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,7 @@ import com.example.demo.exceptions.UserServiceException;
 import com.example.demo.models.response.ErrorMessages;
 import com.example.demo.service.IUserService;
 import com.example.demo.shared.Utils;
+import com.example.demo.shared.dto.AddressDto;
 import com.example.demo.shared.dto.UserDto;
 
 @Service
@@ -38,12 +40,18 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserDto createUser(UserDto user) {
 		// Verification if user email exist in database
-		if (userRepository.findByEmail(user.getEmail()) != null)
+ 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Email already exists !");
 
-		// Copy of user to userEntity
-		UserEntity userEntity = new UserEntity();
-		BeanUtils.copyProperties(user, userEntity);
+		for (int i = 0; i < user.getAddresses().size(); i++) {
+			AddressDto address = user.getAddresses().get(i);
+			address.setUserDetails(user);
+			address.setAddressId(utils.generateRandomEntityPublicId(30));
+			user.getAddresses().set(i, address);
+		}
+
+		ModelMapper modelMapper = new ModelMapper();
+		UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
 		String publicUserId = utils.generateRandomEntityPublicId(30);
 		userEntity.setUserId(publicUserId);
@@ -51,11 +59,10 @@ public class UserServiceImpl implements IUserService {
 
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
-		UserDto returnValue = new UserDto();
-		BeanUtils.copyProperties(storedUserDetails, returnValue);
+		UserDto returnValue = modelMapper.map(storedUserDetails, UserDto.class);
 		return returnValue;
 	}
-
+/*TODO  add */
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		UserEntity userEntity = userRepository.findByEmail(email);

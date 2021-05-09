@@ -26,7 +26,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 				.permitAll().anyRequest().authenticated().and()
 				.addFilter(new AuthenticationFilter(authenticationManager()))
 				.addFilter(new AuthorizationFilter(authenticationManager())).sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // permet de ne pas mettre en cache cookie le token 
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // permet de ne pas mettre en cache ou cookie le token 
 	}
 
 	@Override

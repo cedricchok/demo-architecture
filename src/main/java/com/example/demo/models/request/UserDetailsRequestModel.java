@@ -1,16 +1,13 @@
 package com.example.demo.models.request;
 
+import java.util.List;
+
 public class UserDetailsRequestModel {
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
-
-	
-	
-	public String getFirstName() {
-		return firstName;
-	}
+	private List<AddressRequestModel> addresses;
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -38,6 +35,18 @@ public class UserDetailsRequestModel {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public List<AddressRequestModel> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<AddressRequestModel> addresses) {
+		this.addresses = addresses;
 	}
 
 }

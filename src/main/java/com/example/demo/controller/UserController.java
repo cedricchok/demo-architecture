@@ -1,8 +1,11 @@
 package com.example.demo.controller;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.models.request.UserDetailsRequestModel;
+import com.example.demo.models.response.AddressesRest;
 import com.example.demo.models.response.OperationStatusModel;
 import com.example.demo.models.response.RequestOperationName;
 import com.example.demo.models.response.RequestOperationStatus;
 import com.example.demo.models.response.UserRest;
 import com.example.demo.service.IUserService;
+import com.example.demo.shared.dto.AddressDto;
 import com.example.demo.shared.dto.UserDto;
 
 @RestController
@@ -42,11 +47,14 @@ public class UserController {
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception {
 		UserRest returnValue = new UserRest();
 
-		UserDto userDto = new UserDto();
-		BeanUtils.copyProperties(userDetails, userDto);
+		// UserDto userDto = new UserDto();
+		// BeanUtils.copyProperties(userDetails, userDto);
+
+		ModelMapper modelMapper = new ModelMapper();
+		UserDto userDto = modelMapper.map(userDetails, UserDto.class);
 
 		UserDto createdUser = userService.createUser(userDto);
-		BeanUtils.copyProperties(createdUser, returnValue);
+		returnValue = modelMapper.map(createdUser, UserRest.class);
 
 		return returnValue;
 	}
@@ -60,7 +68,6 @@ public class UserController {
 
 		UserDto updatedUser = userService.updateUser(id, userDto);
 		BeanUtils.copyProperties(updatedUser, returnValue);
-
 		return returnValue;
 	}
 
@@ -104,4 +111,17 @@ public class UserController {
 		return returnValue;
 	}
 
+	// http://localhost:8081/user/USERID/addresses
+	@GetMapping(path = "/{id}/addresses")
+	public List<AddressesRest> getUserAdresses(@PathVariable String id) {
+		List<AddressesRest> returnValue = new ArrayList<>();
+
+		List<AddressDto> addressesDto = addressesService.getAddresses(id);
+		ModelMapper modelMapper = new ModelMapper();
+		Type listType = new TypeToken<List<String>>() {
+		}.getType();
+		returnValue = modelMapper.map(addressesDto, listType);
+
+		return returnValue;
+	}
 }
