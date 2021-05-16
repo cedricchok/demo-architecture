@@ -2,17 +2,20 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.Competition;
+import com.example.demo.entity.CompetitionEntity;
+import com.example.demo.shared.dto.CompetitionDto;
 
 public interface ICompetitionService {
 
-	public List<Competition> findAll();
+	 List<CompetitionDto> getCompetitions();
+
+	CompetitionEntity createCompetition(CompetitionEntity competition);
 	
-    public Competition addCompetition(Competition newCompetition);
+     void deleteCompetition(int competitionId);
 	
-    public void deleteCompetition(int id);
-	
-	public Competition findById(int id);
+     CompetitionDto getCompetitionById(int competitionId);
+
+  	CompetitionDto updateCompetition(int competitionId, CompetitionDto competition);
 
 
 }

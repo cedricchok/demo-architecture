@@ -1,13 +1,12 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.Calendar;
 
 import javax.persistence.*;
 
@@ -16,20 +15,23 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Competition {
-
+public class CompetitionEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private int id;
 
+	@Column(nullable = false)
+	private String competitionId;
 
 	@Column(name = "title", nullable = false)
 	@NotNull
 	private String title;
 
-	@Column(name = "date" , nullable = false)
+	@Column(name = "cp_date", nullable = false)
 	@NotNull
-	private Date date;
+	private Calendar cp_date;
 
 
   /* @OneToMany(cascade = {CascadeType.REMOVE },targetEntity = Team.class, mappedBy = "competition")

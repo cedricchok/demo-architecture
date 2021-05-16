@@ -8,4 +8,6 @@ import com.example.demo.entity.CategoryEntity;
 @Repository
 public interface ICategoryRepository extends CrudRepository<CategoryEntity, Long> {
 	CategoryEntity findByTitle(String title);
+
+	CategoryEntity findCategoryById(int categoryId);
 }

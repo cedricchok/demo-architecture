@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,10 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.request.UserDetailsRequestModel;
-import com.example.demo.models.response.ErrorMessages;
 import com.example.demo.models.response.OperationStatusModel;
 import com.example.demo.models.response.RequestOperationName;
 import com.example.demo.models.response.RequestOperationStatus;
@@ -75,7 +78,35 @@ public class UserController {
 		returnValue.setOperationName(RequestOperationName.DELETE.name());
 		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
 		return returnValue;
+	}
 
+	@GetMapping()
+	public List<UserRest> getUsers(@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "limit", defaultValue = "50") int limit) {
+		List<UserRest> returnValue = new ArrayList<>();
+
+		List<UserDto> users = userService.getUsers(page, limit);
+		// for each UserDto in UserDto list
+		for (UserDto userDto : users) {
+			UserRest userModel = new UserRest();
+			BeanUtils.copyProperties(userDto, userModel);
+			returnValue.add(userModel);
+		}
+		return returnValue;
+	}
+
+	@GetMapping(path = "/all")
+	public List<UserRest> getUsersList() {
+		List<UserRest> returnValue = new ArrayList<>();
+
+		List<UserDto> users = userService.getUsers();
+		// for each UserDto in UserDto list
+		for (UserDto userDto : users) {
+			UserRest userModel = new UserRest();
+			BeanUtils.copyProperties(userDto, userModel);
+			returnValue.add(userModel);
+		}
+		return returnValue;
 	}
 
 }

@@ -1,14 +1,19 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.CategoryEntity;
+import com.example.demo.entity.CompetitionEntity;
 import com.example.demo.models.request.CategoryRequestModels;
-import com.example.demo.models.response.CategoryRest;
+import com.example.demo.models.response.*;
 import com.example.demo.service.ICategoryService;
 import com.example.demo.shared.dto.CategoryDto;
+
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
@@ -18,37 +23,62 @@ public class CategoryController {
 	@Autowired
 	public ICategoryService categoryService;
 
-//    @GetMapping()
-//    public List<CategoryRest> findAll() {
-//        List<CategoryDto> liste = categoryService.findAll();
-//        if(liste != null){
-//            return liste;
-//        } else {
-//            return liste = new ArrayList<CategoryDto>();
-//        }
-//    }
+	@GetMapping(path = "/all")
+	public List<CategoryRest> getCategoriesList() {
+		List<CategoryRest> returnValue = new ArrayList<>();
 
-	@PostMapping()
-	public CategoryRest createCategory(@RequestBody CategoryRequestModels newCategory) {
-		// Objet retourné par l'api
-		CategoryRest returnValue = new CategoryRest();
+		List<CategoryDto> categories = categoryService.getCategroies();
 
-		CategoryDto categoryDto = new CategoryDto();
-		BeanUtils.copyProperties(newCategory, categoryDto);
-
-		CategoryDto createdCategory = categoryService.createCategory(categoryDto);
-		BeanUtils.copyProperties(createdCategory, returnValue);
-
+		for(CategoryDto categoryDto : categories){
+			CategoryRest categoryModel = new CategoryRest();
+			BeanUtils.copyProperties(categoryDto, categoryModel);
+			returnValue.add(categoryModel);
+		}
 		return returnValue;
 	}
 
-//	@DeleteMapping(path = "/{id}")
-//	public void deleteCategoryById(@PathVariable int id) {
-//		cateService.deleteCategory(id);
-//	}
-//
-//	@GetMapping(path = "/{id}")
-//	public void searchCategoryById(@PathVariable int id) {
-//		cateService.findById(id);
-//	}
+	@GetMapping(path = "/{id}")
+	public CategoryRest getCategoryById(@PathVariable int id){
+
+		CategoryRest returnValue = new CategoryRest();
+		CategoryDto categoryDto = categoryService.getCategoryById(id);
+		BeanUtils.copyProperties(categoryDto, returnValue);
+		return returnValue;
+	}
+
+    @PostMapping()
+	public CategoryEntity createCategory(@RequestBody CategoryEntity newCategory){
+
+		CategoryEntity createdCategory = categoryService.createCategory(newCategory);
+
+		return createdCategory;
+	}
+
+	@PutMapping(path = "/{id}")
+	public CategoryRest updateCategory(@PathVariable int id, @RequestBody CategoryRequestModels categoryDetails)
+	{
+		CategoryRest returnValue = new CategoryRest();
+
+		CategoryDto categoryDto = new CategoryDto();
+		BeanUtils.copyProperties(categoryDetails,categoryDto);
+
+		CategoryDto updateCategory = categoryService.updateCategory(id, categoryDto);
+		BeanUtils.copyProperties(updateCategory,returnValue);
+
+			return returnValue;
+	}
+
+	@DeleteMapping(path = "/{id}")
+	public OperationStatusModel deleteCategory(@PathVariable int id){
+		OperationStatusModel returnValue = new OperationStatusModel();
+
+		categoryService.deleteCategory(id);
+
+		returnValue.setOperationName(RequestOperationName.DELETE.name());
+		returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
+		return returnValue;
+
+	}
+
+
 }

@@ -2,6 +2,10 @@ package com.example.demo.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.demo.entity.CompetitionEntity;
+import com.example.demo.exceptions.NotFoundException;
+import com.example.demo.models.response.ErrorMessages;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,53 +20,75 @@ import com.example.demo.shared.dto.CategoryDto;
 public class CategoryServiceImpl implements ICategoryService {
 
 	@Autowired
-	public ICategoryRepository categoryRepo;
+	public ICategoryRepository cateRepository;
 
 	@Autowired
 	public Utils utils;
 
 	@Override
-	public List<CategoryDto> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CategoryDto> getCategroies() {
+		List<CategoryDto> returnValue = new ArrayList<>();
+
+		Iterable<CategoryEntity> categories = cateRepository.findAll();
+		for(CategoryEntity categoryEntity: categories){
+			CategoryDto categoryDto = new CategoryDto();
+			BeanUtils.copyProperties(categoryEntity, categoryDto);
+			returnValue.add(categoryDto);
+		}
+
+		return returnValue;
 	}
 
 	@Override
-	public CategoryDto createCategory(CategoryDto category) {
+	public CategoryEntity createCategory(CategoryEntity category) {
 		// Verifier qu'un titre est bien renseigné
-		if (categoryRepo.findByTitle(category.getTitle()) != null)
+		if (cateRepository.findByTitle(category.getTitle()) != null)
 			throw new RuntimeException("Title already exists !");
 
-		CategoryEntity categoryEntity = new CategoryEntity();
-		BeanUtils.copyProperties(category, categoryEntity);
+        category.setCategoryId(utils.generateRandomEntityPublicId(30));
 
-		String publicCategoryId = utils.generateRandomEntityPublicId(30);
-		categoryEntity.setCategoryId(publicCategoryId);
+        CategoryEntity storedCategory = cateRepository.save(category);
 
-		CategoryEntity storedCategory = categoryRepo.save(categoryEntity);
+        return storedCategory;
+
+	}
+
+	@Override
+	public void deleteCategory(int id) {
+		CategoryEntity categoryEntity = cateRepository.findCategoryById(id);
+
+		if(categoryEntity == null)
+			throw new NotFoundException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		cateRepository.delete(categoryEntity);
+
+	}
+
+	@Override
+	public CategoryDto getCategoryById(int id) {
+		CategoryDto returnValue = new CategoryDto();
+		CategoryEntity categoryEntity = cateRepository.findCategoryById(id);
+
+		if(categoryEntity == null)
+			throw new NotFoundException("Category introuvable");
+
+		BeanUtils.copyProperties(categoryEntity, returnValue);
+
+		return returnValue;
+	}
+	@Override
+	public CategoryDto updateCategory(int id, CategoryDto category) {
 
 		CategoryDto returnValue = new CategoryDto();
-		BeanUtils.copyProperties(storedCategory, returnValue);
+		CategoryEntity categoryEntity = cateRepository.findCategoryById(id);
+
+		if (categoryEntity == null)
+			throw new NotFoundException("Category introuvable");
+
+		categoryEntity.setTitle(category.getTitle());
+
+		CategoryEntity updateCategory = cateRepository.save(categoryEntity);
+		BeanUtils.copyProperties(updateCategory, returnValue);
+
 		return returnValue;
-
 	}
-
-	@Override
-	public CategoryDto deleteCategory(String categoryId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryDto findByCategoryId(String categoryId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryDto updateCategory(String categoryId, CategoryDto category) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

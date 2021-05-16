@@ -9,11 +9,10 @@ public class SecurityConstants {
 	public static final String SIGN_UP_URL = "/user"; // sign up url POST
 
 	public static String getTokenSecret() {
-<<<<<<< HEAD
-		AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("appProperties");
-=======
+
+
 		AppProperties appProperties = (AppProperties) SpringApplicationContext.getBean("AppProperties");
->>>>>>> 345400a9fbf4bb8c94476ccb24626243f702ad6f
+
 		return appProperties.getTokenSecret();
 	}
 }

@@ -12,12 +12,14 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Team {
+public class TeamEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@Column(nullable = false)
+	private String teamId;
  /*   @OneToOne(targetEntity = Activity.class)
 	@JoinColumn(nullable = false, name ="activity_id")
 	private Activity activity;

@@ -2,18 +2,24 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.entity.CategoryEntity;
+import com.example.demo.entity.CompetitionEntity;
 import com.example.demo.shared.dto.CategoryDto;
+import com.example.demo.shared.dto.CompetitionDto;
+import com.example.demo.shared.dto.UserDto;
 
 public interface ICategoryService {
 
-	List<CategoryDto> findAll();
+	List<CategoryDto> getCategroies();
 
-	CategoryDto createCategory(CategoryDto category);
+	CategoryEntity createCategory(CategoryEntity category);
 
-	CategoryDto deleteCategory(String categoryId);
+	void deleteCategory(int categoryId);
 
-	CategoryDto findByCategoryId(String categoryId);
+	CategoryDto getCategoryById(int categoryId);
 
-	CategoryDto updateCategory(String categoryId, CategoryDto category);
+	CategoryDto updateCategory(int id, CategoryDto category);
 
 }
+
+

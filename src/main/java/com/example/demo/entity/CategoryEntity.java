@@ -1,23 +1,19 @@
 package com.example.demo.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity(name = "category")
-
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryEntity {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	private int id;
 
 	@Column(nullable = false)
 	private String categoryId;
@@ -26,29 +22,4 @@ public class CategoryEntity {
 	@NotNull
 	private String title;
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	
 }

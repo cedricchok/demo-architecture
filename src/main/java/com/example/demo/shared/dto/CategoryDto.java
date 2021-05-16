@@ -9,7 +9,7 @@ public class CategoryDto implements Serializable {
 	private String categoryId;
 	private String title;
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
