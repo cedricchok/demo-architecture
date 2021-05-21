@@ -21,4 +21,10 @@ public interface IUserService extends UserDetailsService {
 
 	List<UserDto> getUsers();
 
+	boolean verifyEmailToken(String token);
+
+	boolean requestPasswordReset(String email);
+
+	boolean resetPassword(String token, String password);
+
 }

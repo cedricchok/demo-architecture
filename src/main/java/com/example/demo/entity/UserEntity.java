@@ -1,57 +1,47 @@
 package com.example.demo.entity;
-
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name="user")
 public class UserEntity implements Serializable {
-
-	private static final long serialVersionUID = 7356405956660861319L;
-
+ 
+	private static final long serialVersionUID = 5313493413859894403L;
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue
 	private long id;
-
-	@Column(nullable = false)
-	// Permet de securisé un peu plus les users et ne pas utilisé l'id pour
-	// recuperer un user
+	
+	@Column(nullable=false)
 	private String userId;
 
-	@Column(nullable = false, length = 50)
+	@Column(nullable=false, length=50)
 	private String firstName;
-
-	@Column(nullable = false, length = 50)
+	
+	@Column(nullable=false, length=50)
 	private String lastName;
-
-	@Column(nullable = false, length = 100, unique = true)
+	
+	@Column(nullable=false, length=120)
 	private String email;
-
-	private String emailVerificationToken;
-
-	@Column(nullable = false)
-	private Boolean emailVerificationStatus = false;
-
-	@Column(nullable = false)
+	
+	@Column(nullable=false)
 	private String encryptedPassword;
-
-	private int sex;
-
-	@OneToMany(mappedBy = "userDetails", cascade = CascadeType.ALL)
+	
+	private String emailVerificationToken;
+	
+	@Column(nullable=false)
+	private Boolean emailVerificationStatus = false;
+	
+	@OneToMany(mappedBy="userDetails", cascade=CascadeType.ALL)
 	private List<AddressEntity> addresses;
-
-	private Date registration_date;
 
 	public long getId() {
 		return id;
@@ -93,6 +83,14 @@ public class UserEntity implements Serializable {
 		this.email = email;
 	}
 
+	public String getEncryptedPassword() {
+		return encryptedPassword;
+	}
+
+	public void setEncryptedPassword(String encryptedPassword) {
+		this.encryptedPassword = encryptedPassword;
+	}
+
 	public String getEmailVerificationToken() {
 		return emailVerificationToken;
 	}
@@ -109,30 +107,6 @@ public class UserEntity implements Serializable {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
-	public String getEncryptedPassword() {
-		return encryptedPassword;
-	}
-
-	public void setEncryptedPassword(String encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
-	}
-
-	public int getSex() {
-		return sex;
-	}
-
-	public void setSex(int sex) {
-		this.sex = sex;
-	}
-
-	public Date getRegistration_date() {
-		return registration_date;
-	}
-
-	public void setRegistration_date(Date registration_date) {
-		this.registration_date = registration_date;
-	}
-
 	public List<AddressEntity> getAddresses() {
 		return addresses;
 	}
@@ -140,5 +114,7 @@ public class UserEntity implements Serializable {
 	public void setAddresses(List<AddressEntity> addresses) {
 		this.addresses = addresses;
 	}
+	
+	
 
 }
