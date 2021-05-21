@@ -41,11 +41,11 @@ public class UserServiceImpl implements IUserService {
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Email already exists !");
 
+		// Copy of user to userEntity
 		UserEntity userEntity = new UserEntity();
 		BeanUtils.copyProperties(user, userEntity);
 
 		String publicUserId = utils.generateRandomEntityPublicId(30);
-
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
@@ -76,7 +76,6 @@ public class UserServiceImpl implements IUserService {
 		BeanUtils.copyProperties(userEntity, returnValue);
 		return returnValue;
 	}
-
 
 	@Override
 	public UserDto getUserByUserId(String userId) {

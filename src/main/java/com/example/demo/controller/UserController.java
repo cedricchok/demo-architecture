@@ -7,16 +7,13 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.demo.models.request.UserDetailsRequestModel;
 import com.example.demo.models.response.OperationStatusModel;
 import com.example.demo.models.response.RequestOperationName;
@@ -46,7 +43,6 @@ public class UserController {
 		UserRest returnValue = new UserRest();
 
 		UserDto userDto = new UserDto();
-
 		BeanUtils.copyProperties(userDetails, userDto);
 
 		UserDto createdUser = userService.createUser(userDto);
@@ -54,7 +50,6 @@ public class UserController {
 
 		return returnValue;
 	}
-
 
 	@PutMapping(path = "/{id}")
 	public UserRest updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails) {
