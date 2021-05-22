@@ -146,7 +146,7 @@ public class UserController {
 		return returnValue;
 	}
 
-	// http://localhost:8080/mobile-app-ws/users/jfhdjeufhdhdj/addressses
+	// http://localhost:8080/users/jfhdjeufhdhdj/addressses
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
 	@GetMapping(path = "/{id}/addresses", produces = {
