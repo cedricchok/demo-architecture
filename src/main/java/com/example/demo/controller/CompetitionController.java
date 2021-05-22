@@ -1,15 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.CompetitionEntity;
-import com.example.demo.models.request.CompetitionRequestModels;
-import com.example.demo.models.response.*;
 import com.example.demo.service.ICompetitionService;
-import com.example.demo.shared.dto.CompetitionDto;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
     @RestController
@@ -20,21 +15,21 @@ import java.util.List;
         public ICompetitionService competitionService;
 
         @GetMapping(path = "/all")
-        public List<CompetitionRest> getCompetitionList() {
-            List<CompetitionRest> returnValue = new ArrayList<>();
+        public List<CompetitionEntity> getCompetitionList() {
 
-            List<CompetitionDto> competitions = competitionService.getCompetitions();
+            List<CompetitionEntity> returnValue = competitionService.getCompetitions();
 
-            for (CompetitionDto competitionDto : competitions) {
-                CompetitionRest competitionModel = new CompetitionRest();
-                BeanUtils.copyProperties(competitionDto, competitionModel);
-                returnValue.add(competitionModel);
-            }
             return returnValue;
         }
 
-
         @GetMapping(path = "/{id}")
+        public CompetitionEntity getCompetitionById(@PathVariable int id) {
+
+            CompetitionEntity returnValue = competitionService.getCompetitionById(id);
+
+            return returnValue;
+        }
+/*
         public CompetitionRest getCompetitionById(@PathVariable int id) {
 
             CompetitionRest returnValue = new CompetitionRest();
@@ -42,6 +37,7 @@ import java.util.List;
             BeanUtils.copyProperties(competitionDto, returnValue);
             return returnValue;
         }
+*/
 
         @PostMapping()
         public CompetitionEntity createCompetition(@RequestBody CompetitionEntity newCompetition) {
@@ -52,8 +48,9 @@ import java.util.List;
 
             return createdCompetition;
         }
-
+/*
         @PutMapping(path = "/{id}")
+
         public CompetitionRest updateCompetition(@PathVariable int id, @RequestBody CompetitionRequestModels competitionDetails) {
             CompetitionRest returnValue = new CompetitionRest();
 
@@ -64,19 +61,22 @@ import java.util.List;
             BeanUtils.copyProperties(updateCompetition, returnValue);
 
             return returnValue;
+        }*/
+
+        @PutMapping(path = "/{id}")
+        public CompetitionEntity updateCompetition(@RequestBody CompetitionEntity competition){
+
+            CompetitionEntity updatedCompetition = competitionService.updateCompetition(competition);
+
+            return updatedCompetition;
+
         }
 
         @DeleteMapping(path = "/{id}")
-        public OperationStatusModel deleteCompetition(@PathVariable int id) {
-            OperationStatusModel returnValue = new OperationStatusModel();
+        public void deleteCompetition(@PathVariable int id) {
 
             competitionService.deleteCompetition(id);
 
-            returnValue.setOperationName(RequestOperationName.DELETE.name());
-            returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
-            return returnValue;
+       }
 
-        }
     }
-
-

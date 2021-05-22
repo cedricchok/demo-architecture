@@ -10,9 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-
 import com.example.demo.security.AppProperties;
-
 
 @SpringBootApplication
 public class DemoApplication extends SpringBootServletInitializer {
@@ -37,11 +35,9 @@ public class DemoApplication extends SpringBootServletInitializer {
 		return new SpringApplicationContext();
 	}
 
-
 	@Bean(name = "AppProperties")
 	public AppProperties getAppProperties() {
 		return new AppProperties();
 	}
-
 
 }

@@ -2,19 +2,14 @@ package com.example.demo.service.impl;
 
 
 import com.example.demo.dao.ITrainingRepository;
-import com.example.demo.entity.TeamEntity;
 import com.example.demo.entity.TrainingEntity;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.models.response.ErrorMessages;
 import com.example.demo.service.ITrainingService;
 import com.example.demo.shared.Utils;
-import com.example.demo.shared.dto.TeamDto;
-import com.example.demo.shared.dto.TrainingDto;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,18 +22,14 @@ public class TrainingServiceImpl implements ITrainingService {
     public Utils utils;
 
     @Override
-    public List<TrainingDto> getTrainings(){
-        List<TrainingDto> returnValue = new ArrayList<>();
+    public List<TrainingEntity> getTrainings() {
 
-        Iterable<TrainingEntity> trainings = trainRepository.findAll();
-        for(TrainingEntity trainingEntity: trainings){
-            TrainingDto trainingDto = new TrainingDto();
-            BeanUtils.copyProperties(trainingEntity, trainingDto);
-            returnValue.add(trainingDto);
-        }
+        List<TrainingEntity> returnValue = (List<TrainingEntity>) trainRepository.findAll();
+
         return returnValue;
 
     }
+
     @Override
     public TrainingEntity createTraining(TrainingEntity training){
         if(trainRepository.findByTitle(training.getTitle()) != null)
@@ -76,32 +67,23 @@ public class TrainingServiceImpl implements ITrainingService {
         trainRepository.delete(trainingEntity);
 
     }
+
     @Override
-    public TrainingDto getTrainingById(int id){
-        TrainingDto returnValue = new TrainingDto();
+    public TrainingEntity getTrainingById(int id){
+
         TrainingEntity trainingEntity = trainRepository.findTrainingById(id);
 
         if(trainingEntity == null)
             throw new NotFoundException("Training introuvable");
-        BeanUtils.copyProperties(trainingEntity, returnValue);
 
-        return returnValue;
+        return trainingEntity;
     }
 
     @Override
-    public TrainingDto updateTraining(int id, TrainingDto training){
+    public TrainingEntity updateTraining(TrainingEntity training) {
 
-        TrainingDto returnValue = new TrainingDto();
-        TrainingEntity trainingEntity = trainRepository.findTrainingById(id);
+        TrainingEntity updatedTraining = trainRepository.save(training);
 
-        if(trainingEntity == null)
-            throw new NotFoundException("Training introuvable");
-
-        trainingEntity.setTrainingId(training.getTitle());
-
-        TrainingEntity updateTraining = trainRepository.save(trainingEntity);
-        BeanUtils.copyProperties(updateTraining,returnValue);
-
-        return returnValue;
+        return updatedTraining;
     }
 }

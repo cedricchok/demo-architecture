@@ -8,13 +8,9 @@ import com.example.demo.models.response.ErrorMessages;
 import com.example.demo.service.ICompetitionService;
 import com.example.demo.shared.Utils;
 
-import com.example.demo.shared.dto.CompetitionDto;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -27,20 +23,20 @@ public class CompetitionServiceImpl implements ICompetitionService {
     public Utils utils;
 
     @Override
-    public List<CompetitionDto> getCompetitions() {
-        List<CompetitionDto> returnValue = new ArrayList<>();
+    public List<CompetitionEntity> getCompetitions() {
+        List<CompetitionEntity> returnValue = compRepository.findAll();
 
+        return returnValue;
+    }
+
+/*
         Iterable<CompetitionEntity> competitions = compRepository.findAll();
         for(CompetitionEntity competitionEntity: competitions ){
             CompetitionDto competitionDto = new CompetitionDto();
             BeanUtils.copyProperties(competitionEntity, competitionDto);
             returnValue.add(competitionDto);
         }
-
-
-        return returnValue;
-    }
-
+*/
 
     @Override
     public CompetitionEntity createCompetition(CompetitionEntity competition) {
@@ -55,6 +51,7 @@ public class CompetitionServiceImpl implements ICompetitionService {
         return storedCompetition;
 
     }
+
     @Override
     public void deleteCompetition(int id){
         CompetitionEntity competitionEntity = compRepository.findCompetitionById(id);
@@ -64,8 +61,17 @@ public class CompetitionServiceImpl implements ICompetitionService {
         compRepository.delete(competitionEntity);
 
     }
+
     @Override
-    public CompetitionDto getCompetitionById(int id){
+    public CompetitionEntity getCompetitionById(int id) {
+        CompetitionEntity competitionEntity = compRepository.findCompetitionById(id);
+
+        if (competitionEntity == null)
+            throw new NotFoundException("Competition introuvable");
+
+        return competitionEntity;
+    }
+/*    public CompetitionDto getCompetitionById(int id){
         CompetitionDto returnValue = new CompetitionDto();
         CompetitionEntity competitionEntity = compRepository.findCompetitionById(id);
 
@@ -75,9 +81,9 @@ public class CompetitionServiceImpl implements ICompetitionService {
         BeanUtils.copyProperties(competitionEntity, returnValue);
 
         return returnValue;
-    }
+    }*/
 
-    @Override
+/*    @Override
     public CompetitionDto updateCompetition(int id, CompetitionDto competition){
 
         CompetitionDto returnValue = new CompetitionDto();
@@ -93,8 +99,14 @@ public class CompetitionServiceImpl implements ICompetitionService {
 
         return returnValue;
 
+    }*/
+    @Override
+    public CompetitionEntity updateCompetition(CompetitionEntity competition) {
 
+        //CompetitionEntity competitionEntity = compRepository.findCompetitionById(id);
+
+        CompetitionEntity updatedCompetition = compRepository.save(competition);
+
+        return updatedCompetition;
     }
-
-
 }

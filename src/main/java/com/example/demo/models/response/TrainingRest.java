@@ -1,4 +1,4 @@
-package com.example.demo.models.response;
+/*package com.example.demo.models.response;
 
 import java.util.Calendar;
 
@@ -42,4 +42,4 @@ public class TrainingRest {
         this.title = title;
     }
 
-}
+}*/

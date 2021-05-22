@@ -1,3 +1,4 @@
+/*
 package com.example.demo.models.response;
 
 import lombok.Data;
@@ -12,3 +13,4 @@ public class CompetitionRest {
     private Calendar cp_date;
 
 }
+*/

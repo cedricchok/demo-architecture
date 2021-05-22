@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,12 +15,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dao.IPasswordResetTokenRepository;
 import com.example.demo.dao.IUserRepository;
+import com.example.demo.entity.PasswordResetTokenEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.exceptions.UserServiceException;
 import com.example.demo.models.response.ErrorMessages;
 import com.example.demo.service.IUserService;
 import com.example.demo.shared.Utils;
+import com.example.demo.shared.dto.AddressDto;
 import com.example.demo.shared.dto.UserDto;
 
 @Service
@@ -34,28 +38,39 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	@Autowired
+	IPasswordResetTokenRepository passwordResetTokenRepository;
+
 	// Create user
 	@Override
 	public UserDto createUser(UserDto user) {
 		// Verification if user email exist in database
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Email already exists !");
+		if (user.getAddresses() != null) {
+			for (int i = 0; i < user.getAddresses().size(); i++) {
+				AddressDto address = user.getAddresses().get(i);
+				address.setUserDetails(user);
+				address.setAddressId(utils.generateRandomEntityPublicId(30));
+				user.getAddresses().set(i, address);
+			}
+		}
 
-		// Copy of user to userEntity
-		UserEntity userEntity = new UserEntity();
-		BeanUtils.copyProperties(user, userEntity);
+		ModelMapper modelMapper = new ModelMapper();
+		UserEntity userEntity = modelMapper.map(user, UserEntity.class);
 
 		String publicUserId = utils.generateRandomEntityPublicId(30);
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		userEntity.setEmailVerificationToken(utils.generateEmailVerificationToken(publicUserId));
 
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
-		UserDto returnValue = new UserDto();
-		BeanUtils.copyProperties(storedUserDetails, returnValue);
+		UserDto returnValue = modelMapper.map(storedUserDetails, UserDto.class);
 		return returnValue;
 	}
 
+	/* TODO add Model mapper to all method */
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		UserEntity userEntity = userRepository.findByEmail(email);
@@ -150,4 +165,81 @@ public class UserServiceImpl implements IUserService {
 		return returnValue;
 	}
 
+	@Override
+	public boolean verifyEmailToken(String token) {
+		boolean returnValue = false;
+
+		// FInd user by token
+
+		UserEntity userEntity = userRepository.findUserByEmailVerificationToken(token);
+		if (userEntity != null) {
+			boolean hasTokenExpired = Utils.hasTokenExpired(token);
+			if (!hasTokenExpired) {
+				userEntity.setEmailVerificationToken(null);
+				userEntity.setEmailVerificationStatus(Boolean.TRUE);
+				userRepository.save(userEntity);
+				returnValue = true;
+			}
+		}
+
+		return returnValue;
+	}
+
+	@Override
+	public boolean requestPasswordReset(String email) {
+
+		boolean returnValue = false;
+
+		UserEntity userEntity = userRepository.findByEmail(email);
+
+		if (userEntity == null) {
+			return returnValue;
+		}
+
+		String token = new Utils().generatePasswordResetToken(userEntity.getUserId());
+
+		PasswordResetTokenEntity passwordResetTokenEntity = new PasswordResetTokenEntity();
+		passwordResetTokenEntity.setToken(token);
+		passwordResetTokenEntity.setUserDetails(userEntity);
+		passwordResetTokenRepository.save(passwordResetTokenEntity);
+
+		// returnValue = new
+		// AmazonSES().sendPasswordResetRequest(userEntity.getFirstName(),
+		// userEntity.getEmail(), token);
+		returnValue = true;
+		return returnValue;
+	}
+
+	@Override
+	public boolean resetPassword(String token, String password) {
+		boolean returnValue = false;
+
+		if (Utils.hasTokenExpired(token)) {
+			return returnValue;
+		}
+
+		PasswordResetTokenEntity passwordResetTokenEntity = passwordResetTokenRepository.findByToken(token);
+
+		if (passwordResetTokenEntity == null) {
+			return returnValue;
+		}
+
+		// Prepare new password
+		String encodedPassword = bCryptPasswordEncoder.encode(password);
+
+		// Update User password in database
+		UserEntity userEntity = passwordResetTokenEntity.getUserDetails();
+		userEntity.setEncryptedPassword(encodedPassword);
+		UserEntity savedUserEntity = userRepository.save(userEntity);
+
+		// Verify if password was saved successfully
+		if (savedUserEntity != null && savedUserEntity.getEncryptedPassword().equalsIgnoreCase(encodedPassword)) {
+			returnValue = true;
+		}
+
+		// Remove Password Reset token from database
+		passwordResetTokenRepository.delete(passwordResetTokenEntity);
+
+		return returnValue;
+	}
 }

@@ -1,12 +1,9 @@
 package com.example.demo.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import com.example.demo.entity.CompetitionEntity;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.models.response.ErrorMessages;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +11,6 @@ import com.example.demo.dao.ICategoryRepository;
 import com.example.demo.entity.CategoryEntity;
 import com.example.demo.service.ICategoryService;
 import com.example.demo.shared.Utils;
-import com.example.demo.shared.dto.CategoryDto;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
@@ -25,9 +21,9 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Autowired
 	public Utils utils;
 
-	@Override
-	public List<CategoryDto> getCategroies() {
-		List<CategoryDto> returnValue = new ArrayList<>();
+/*	@Override
+	public List<CategoryEntity> getCategroies() {
+		List<CategoryEntity> returnValue = new ArrayList<>();
 
 		Iterable<CategoryEntity> categories = cateRepository.findAll();
 		for(CategoryEntity categoryEntity: categories){
@@ -37,10 +33,30 @@ public class CategoryServiceImpl implements ICategoryService {
 		}
 
 		return returnValue;
+	}*/
+
+
+	@Override
+	public List<CategoryEntity> getCategories() {
+
+		List<CategoryEntity> returnValue = (List<CategoryEntity>) cateRepository.findAll();
+
+		return returnValue;
 	}
+
+
+/*
+        Iterable<CompetitionEntity> competitions = compRepository.findAll();
+        for(CompetitionEntity competitionEntity: competitions ){
+            CompetitionDto competitionDto = new CompetitionDto();
+            BeanUtils.copyProperties(competitionEntity, competitionDto);
+            returnValue.add(competitionDto);
+        }
+*/
 
 	@Override
 	public CategoryEntity createCategory(CategoryEntity category) {
+
 		// Verifier qu'un titre est bien renseigné
 		if (cateRepository.findByTitle(category.getTitle()) != null)
 			throw new RuntimeException("Title already exists !");
@@ -55,6 +71,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Override
 	public void deleteCategory(int id) {
+
 		CategoryEntity categoryEntity = cateRepository.findCategoryById(id);
 
 		if(categoryEntity == null)
@@ -64,31 +81,21 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public CategoryDto getCategoryById(int id) {
-		CategoryDto returnValue = new CategoryDto();
+	public CategoryEntity getCategoryById(int id) {
+
 		CategoryEntity categoryEntity = cateRepository.findCategoryById(id);
 
 		if(categoryEntity == null)
 			throw new NotFoundException("Category introuvable");
 
-		BeanUtils.copyProperties(categoryEntity, returnValue);
-
-		return returnValue;
+		return categoryEntity;
 	}
-	@Override
-	public CategoryDto updateCategory(int id, CategoryDto category) {
 
-		CategoryDto returnValue = new CategoryDto();
-		CategoryEntity categoryEntity = cateRepository.findCategoryById(id);
+    @Override
+	public CategoryEntity updateCategory(CategoryEntity category){
 
-		if (categoryEntity == null)
-			throw new NotFoundException("Category introuvable");
+		CategoryEntity updatedCategory = cateRepository.save(category);
 
-		categoryEntity.setTitle(category.getTitle());
-
-		CategoryEntity updateCategory = cateRepository.save(categoryEntity);
-		BeanUtils.copyProperties(updateCategory, returnValue);
-
-		return returnValue;
+		return updatedCategory;
 	}
 }

@@ -1,4 +1,4 @@
-package com.example.demo.models.request;
+/*package com.example.demo.models.request;
 
 import lombok.Data;
 
@@ -9,4 +9,4 @@ public class CompetitionRequestModels {
 
     private String title;
     private Calendar cp_date;
-}
+}*/

@@ -1,16 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.CompetitionEntity;
 import com.example.demo.entity.TeamEntity;
-import com.example.demo.models.request.TeamRequestModels;
-import com.example.demo.models.response.*;
 import com.example.demo.service.ITeamService;
-import com.example.demo.shared.dto.TeamDto;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,25 +15,19 @@ public class TeamController {
     public ITeamService teamService;
 
     @GetMapping(path = "/all")
-    public List<TeamRest> getTeamsList(){
-        List<TeamRest> returnValue = new ArrayList<>();
+    public List<TeamEntity> getTeamsList(){
 
-        List<TeamDto> teams = teamService.getTeams();
+        List<TeamEntity> returnValue = teamService.getTeams();
 
-        for(TeamDto teamDto: teams){
-            TeamRest teamModel = new TeamRest();
-            BeanUtils.copyProperties(teamDto, teamModel);
-            returnValue.add(teamModel);
-        }
-        return returnValue;
+           return returnValue;
     }
 
     @GetMapping(path = "/{id}")
-    public TeamRest getTeamById(@PathVariable int id){
 
-        TeamRest returnValue = new TeamRest();
-        TeamDto teamDto = teamService.getTeamById(id);
-        BeanUtils.copyProperties(teamDto, returnValue);
+    public TeamEntity getTeamById(@PathVariable int id){
+
+        TeamEntity returnValue = teamService.getTeamById(id);
+
         return returnValue;
     }
 
@@ -50,30 +38,20 @@ public class TeamController {
 
         return createdTeam;
     }
+
     @PutMapping(path ="/{id}")
-    public TeamRest updateTeam(@PathVariable int id, @RequestBody TeamRequestModels teamDetails)
-    {
-       TeamRest returnValue = new TeamRest();
+    public TeamEntity updateTeam(@PathVariable TeamEntity team){
 
-       TeamDto teamDto = new TeamDto();
-       BeanUtils.copyProperties(teamDetails,teamDto);
+        TeamEntity updatedTeam = teamService.updateTeam(team);
 
-       TeamDto updateTeam = teamService.updateTeam(id,teamDto);
-       BeanUtils.copyProperties(updateTeam, returnValue);
-
-       return returnValue;
+        return updatedTeam;
     }
 
     @DeleteMapping(path= "/{id}")
-    public OperationStatusModel deleteTeam(@PathVariable int id){
-        OperationStatusModel returnValue = new OperationStatusModel();
+
+    public void deleteTeam(@PathVariable int id) {
 
         teamService.deleteTeam(id);
-
-        returnValue.setOperationName(RequestOperationName.DELETE.name());
-        returnValue.setOperationResult(RequestOperationStatus.SUCCESS.name());
-
-        return returnValue;
 
     }
 

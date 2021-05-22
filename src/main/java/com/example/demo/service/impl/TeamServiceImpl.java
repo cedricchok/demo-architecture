@@ -7,12 +7,9 @@ import com.example.demo.models.response.ErrorMessages;
 import com.example.demo.service.ITeamService;
 import com.example.demo.shared.Utils;
 
-import com.example.demo.shared.dto.TeamDto;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,18 +23,13 @@ public class TeamServiceImpl implements ITeamService {
 
 
     @Override
-    public List<TeamDto> getTeams() {
-        List<TeamDto> returnValue = new ArrayList<>();
+    public List<TeamEntity> getTeams() {
 
-        Iterable<TeamEntity> teams = teamRepository.findAll();
-        for(TeamEntity teamEntity: teams){
-            TeamDto teamDto = new TeamDto();
-            BeanUtils.copyProperties(teamEntity, teamDto);
-            returnValue.add(teamDto);
-        }
+        List<TeamEntity> returnValue = (List<TeamEntity>) teamRepository.findAll();
+
         return returnValue;
 
-    }
+        }
 
     @Override
     public TeamEntity createTeam(TeamEntity team){
@@ -61,29 +53,21 @@ public class TeamServiceImpl implements ITeamService {
     }
 
     @Override
-    public TeamDto getTeamById(int id) {
-        TeamDto returnValue = new TeamDto();
+    public TeamEntity getTeamById(int id) {
+
         TeamEntity teamEntity = teamRepository.findTeamById(id);
 
         if(teamEntity == null)
             throw new NotFoundException("Team introuvable");
-        BeanUtils.copyProperties(teamEntity, returnValue);
-        return returnValue;
+
+        return teamEntity;
     }
 
     @Override
-    public TeamDto updateTeam(int id, TeamDto team) {
+    public TeamEntity updateTeam(TeamEntity team) {
 
-        TeamDto returnValue = new TeamDto();
-        TeamEntity teamEntity = teamRepository.findTeamById(id);
+       TeamEntity updatedTeam = teamRepository.save(team);
 
-        if(teamEntity == null)
-            throw new NotFoundException("team introuvable!");
-
-        teamEntity.setLabel((team.getLabel()));
-        TeamEntity updateTeam = teamRepository.save(teamEntity);
-        BeanUtils.copyProperties(updateTeam,returnValue);
-        return returnValue;
+       return updatedTeam;
     }
-
 }
