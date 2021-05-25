@@ -1,30 +1,28 @@
 package com.example.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "localisation")
+import javax.persistence.*;
+
 @Entity
+@Table(name = "localisation")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Localisation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+ /* @OneToOne(targetEntity = Club.class)
+	@JoinColumn(nullable = false, name = "club_id")
+	private Club club;*/
+
+	@Column(name = "coord", nullable = false)
+	@NotNull
 	private String coord;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getCoord() {
-		return coord;
-	}
-	public void setCoord(String coord) {
-		this.coord = coord;
-	}
 }

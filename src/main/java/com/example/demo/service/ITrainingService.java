@@ -2,15 +2,17 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.Training;
+import com.example.demo.entity.TrainingEntity;
 
 public interface ITrainingService {
 
-	public List<Training> getTrainings();
-	
-//	public Training addTraining(Training newTraining);
-	
-//	public void deleteTraining(int id);
-	
-	public Training getTrainingById(int id);
+	List<TrainingEntity> getTrainings();
+
+	TrainingEntity createTraining(TrainingEntity training);
+
+	void deleteTraining(int trainingId);
+
+	TrainingEntity getTrainingById(int trainingId);
+
+	TrainingEntity updateTraining(TrainingEntity training);
 }

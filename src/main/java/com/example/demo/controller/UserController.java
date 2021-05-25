@@ -71,8 +71,8 @@ public class UserController {
 
 	@PostMapping(consumes = {MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE}, produces = {
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_JSON_VALUE})
+			MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE})
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails)
 			throws Exception {
 		UserRest returnValue = new UserRest();
@@ -91,12 +91,12 @@ public class UserController {
 
 	@PutMapping(path = "/{id}", consumes = {MediaType.APPLICATION_XML_VALUE,
 			MediaType.APPLICATION_JSON_VALUE}, produces = {
-					MediaType.APPLICATION_XML_VALUE,
-					MediaType.APPLICATION_JSON_VALUE})
+			MediaType.APPLICATION_XML_VALUE,
+			MediaType.APPLICATION_JSON_VALUE})
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "authorization", value = "${userController.authorizationHeader.description}", paramType = "header")})
 	public UserRest updateUser(@PathVariable String id,
-			@RequestBody UserDetailsRequestModel userDetails) {
+							   @RequestBody UserDetailsRequestModel userDetails) {
 		UserRest returnValue = new UserRest();
 
 		UserDto userDto = new UserDto();
@@ -167,12 +167,12 @@ public class UserController {
 			for (AddressesRest addressRest : addressesListRestModel) {
 				Link addressLink = linkTo(methodOn(UserController.class)
 						.getUserAddress(id, addressRest.getAddressId()))
-								.withSelfRel();
+						.withSelfRel();
 				addressRest.add(addressLink);
 
 				Link userLink = linkTo(
 						methodOn(UserController.class).getUser(id))
-								.withRel("user");
+						.withRel("user");
 				addressRest.add(userLink);
 			}
 		}
@@ -197,7 +197,7 @@ public class UserController {
 				.withRel("user");
 		Link addressesLink = linkTo(
 				methodOn(UserController.class).getUserAddresses(userId))
-						.withRel("addresses");
+				.withRel("addresses");
 
 		AddressesRest addressesRestModel = modelMapper.map(addressesDto,
 				AddressesRest.class);
@@ -238,8 +238,8 @@ public class UserController {
 	@PostMapping(path = "/password-reset-request", produces = {
 			MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_XML_VALUE}, consumes = {
-					MediaType.APPLICATION_JSON_VALUE,
-					MediaType.APPLICATION_XML_VALUE})
+			MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE})
 	public OperationStatusModel requestReset(
 			@RequestBody PasswordResetRequestModel passwordResetRequestModel) {
 		OperationStatusModel returnValue = new OperationStatusModel();

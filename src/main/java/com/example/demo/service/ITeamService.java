@@ -2,15 +2,18 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.entity.Team;
+import com.example.demo.entity.TeamEntity;
 
 public interface ITeamService {
 
-	public List<Team> getTeams();
+	List<TeamEntity> getTeams();
+
+	TeamEntity createTeam(TeamEntity team);
 	
-	public Team addTeam(Team newTeam);
+	void deleteTeam(int teamId);
 	
-	public void deleteTeam(int id);
-	
-	public Team getTeamById(int id);
+	TeamEntity getTeamById(int teamId);
+
+	TeamEntity updateTeam(TeamEntity team);
+
 }

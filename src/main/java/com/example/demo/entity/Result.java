@@ -1,37 +1,37 @@
 package com.example.demo.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "result")
+import javax.persistence.*;
+import java.util.Date;
+
 @Entity
+@Table(name = "result")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Result {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int score_t1;
-	private int score_t2;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public int getScore_t1() {
-		return score_t1;
-	}
-	public void setScore_t1(int score_t1) {
-		this.score_t1 = score_t1;
-	}
-	public int getScore_t2() {
-		return score_t2;
-	}
-	public void setScore_t2(int score_t2) {
-		this.score_t2 = score_t2;
-	}
+
+ /* @ManyToOne(targetEntity = Competition.class)
+	@JoinColumn( name = "competition_id", nullable = false)
+	private Competition competition;*/
+
+	@Column (name ="result_date",nullable = false)
+	@NotNull
+	private Date date;
+
+	@Column (name = "score_eq1", nullable = false)
+	@NotNull
+	private int score_eq1;
+
+	@Column (name = "score_eq2", nullable = false)
+	@NotNull
+	private int score_eq2;
 }

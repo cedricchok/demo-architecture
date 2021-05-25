@@ -1,47 +1,55 @@
 package com.example.demo.entity;
-import java.io.Serializable;
-import java.util.List;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-@Entity
-@Table(name="user")
+@Entity(name = "user")
 public class UserEntity implements Serializable {
- 
-	private static final long serialVersionUID = 5313493413859894403L;
-	
+
+	private static final long serialVersionUID = 7356405956660861319L;
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
+	// Permet de securisé un peu plus les users et ne pas utilisé l'id pour
+	// recuperer un user
 	private String userId;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable = false, length = 50)
 	private String firstName;
-	
-	@Column(nullable=false, length=50)
+
+	@Column(nullable = false, length = 50)
 	private String lastName;
-	
-	@Column(nullable=false, length=120)
+
+	@Column(nullable = false, length = 100, unique = true)
 	private String email;
-	
-	@Column(nullable=false)
-	private String encryptedPassword;
-	
+
 	private String emailVerificationToken;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private Boolean emailVerificationStatus = false;
-	
-	@OneToMany(mappedBy="userDetails", cascade=CascadeType.ALL)
-	private List<AddressEntity> addresses;
+
+	@Column(nullable = false)
+	private String encryptedPassword;
+
+	private String address;
+
+	private String zipcode;
+
+	private String city;
+
+	private String telephone;
+
+	private int sex;
+
+	private Date registration_date;
 
 	public long getId() {
 		return id;
@@ -83,14 +91,6 @@ public class UserEntity implements Serializable {
 		this.email = email;
 	}
 
-	public String getEncryptedPassword() {
-		return encryptedPassword;
-	}
-
-	public void setEncryptedPassword(String encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
-	}
-
 	public String getEmailVerificationToken() {
 		return emailVerificationToken;
 	}
@@ -107,14 +107,60 @@ public class UserEntity implements Serializable {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
-	public List<AddressEntity> getAddresses() {
-		return addresses;
+	public String getEncryptedPassword() {
+		return encryptedPassword;
 	}
 
-	public void setAddresses(List<AddressEntity> addresses) {
-		this.addresses = addresses;
+	public void setEncryptedPassword(String encryptedPassword) {
+		this.encryptedPassword = encryptedPassword;
 	}
-	
-	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public int getSex() {
+		return sex;
+	}
+
+	public void setSex(int sex) {
+		this.sex = sex;
+	}
+
+	public Date getRegistration_date() {
+		return registration_date;
+	}
+
+	public void setRegistration_date(Date registration_date) {
+		this.registration_date = registration_date;
+	}
 
 }

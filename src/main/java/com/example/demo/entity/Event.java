@@ -1,46 +1,39 @@
 package com.example.demo.entity;
 
+import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name = "event")
 @Entity
+@Table(name = "event")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Event {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
 	private int id;
-	private String label;
+
+  /* @ManyToOne(targetEntity = Club.class)
+	@JoinColumn(nullable = false)
+	private Club club;*/
+
+	@Column(name = "title" , nullable = false, length = 100)
+	@NotNull
+	private String title;
+
+	@Column(name = "description", nullable = false, length = 300)
+	@NotNull
 	private String description;
+
+	@Column(name = "date", nullable = false)
+	@NotNull
 	private Date date;
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getLabel() {
-		return label;
-	}
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
 }
